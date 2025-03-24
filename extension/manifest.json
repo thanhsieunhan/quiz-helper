@@ -1,0 +1,41 @@
+{
+    "manifest_version": 3,
+    "name": "Rikkei Quiz Helper",
+    "version": "1.0",
+    "description": "Hỗ trợ làm bài quiz trên Rikkei.vn",
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting",
+        "tabs"
+    ],
+    "host_permissions": [
+        "*://*.rikkei.vn/*",
+        "http://localhost:8000/*",
+        "file://*/*"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "128": "images/icon128.png"
+        }
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.rikkei.vn/*",
+                "file://*/*"
+            ],
+            "js": [
+                "js/content.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "icons": {
+        "128": "images/icon128.png"
+    }
+}

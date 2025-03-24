@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Database - Rikkei Quiz Helper</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+      .stats {
+        background-color: #e8f5e9;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+      }
+      .stats p {
+        margin: 5px 0;
+      }
+      .question-item {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 15px;
+        margin-bottom: 15px;
+        background-color: white;
+      }
+      .question-item p {
+        margin: 5px 0;
+      }
+      .question-item ul {
+        margin: 5px 0;
+        padding-left: 20px;
+      }
+      .question-item li {
+        margin: 3px 0;
+      }
+      .correct {
+        color: #4caf50;
+        font-weight: bold;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        gap: 10px;
+      }
+      .pagination button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .pagination button:hover:not(:disabled) {
+        background-color: #45a049;
+      }
+      .pagination button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
+      .pagination span {
+        font-size: 14px;
+        color: #666;
+      }
+      .search-container {
+        margin-bottom: 20px;
+      }
+      .search-input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      .search-input:focus {
+        outline: none;
+        border-color: #4caf50;
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Database - Rikkei Quiz Helper</h1>
+      </div>
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="Tìm kiếm câu hỏi..."
+        />
+      </div>
+      <div class="stats">
+        <p>
+          <strong>Tổng số câu hỏi:</strong> <span id="totalQuestions">0</span>
+        </p>
+        <p>
+          <strong>Cập nhật lần cuối:</strong>
+          <span id="lastUpdate">Chưa có dữ liệu</span>
+        </p>
+      </div>
+      <div id="database"></div>
+    </div>
+    <script src="js/database.js"></script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+Tạo 1 chrome extension với mục đích làm bài kiểm tra, dựa vào bộ câu trả lời có sẵn đề tích chọn đáp án
+file Xem kết quả - Rikkeisoft.html là 1 bài kiểm tra mẫu
+Extension sẽ có 2 chức năng chính là import câu hỏi vào database và auto fill đáp án
+
+Chức năng 1: Import câu hỏi vào database. Dựa vào file Xem kết quả - Rikkeisoft.html để tạo cơ sở dữ liệu câu hỏi và đáp án
+    1.1 thẻ div có class là q_content chứa nội dung câu hỏi
+    1.2 thẻ div có class là _answer chứa nội dung các câu trả lời, và input chứa checked sẽ là đáp án đúng
+    1.3 dựa vào các class trên để tạo bộ cơ sở dữ liệu, 1 câu hỏi sẽ có nhiều câu trả lời, và cũng sẽ có nhiều đáp án đúng
+
+Chức năng 2: Auto fill đáp án
+    1. Ấn vào extension sẽ có nút fill
+    2. Khi đấy lấy Câu hỏi và đáp án kiểm tra trong database có dữ liệu đáp án đúng hay không?
+        2.1 Nếu có thì fill đáp án vào. Vì đáp án mỗi lần sẽ có thứ tự khác nhau, nên hãy kiểm tra nội dung đáp án đúng
+        2.2 Nếu không thì bỏ qua
+    
