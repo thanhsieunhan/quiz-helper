@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8000';
+const API_URL = 'https://quiz.rikkei.online';
 
 // Hàm hiển thị trạng thái
 function showStatus(success, message) {
@@ -15,7 +15,7 @@ async function updateStats() {
       throw new Error('Không thể kết nối đến server');
     }
     const data = await response.json();
-    document.getElementById('totalQuestions').textContent = data.length;
+    document.getElementById('totalQuestions').textContent = data.total;
     document.getElementById('lastUpdate').textContent =
       new Date().toLocaleString('vi-VN');
   } catch (error) {
@@ -84,12 +84,20 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error('Không tìm thấy tab đang mở');
       }
 
-      const response = await chrome.tabs.sendMessage(tab.id, {
-        action: 'import',
+      showStatus(true, 'Đang import câu hỏi...');
+
+      const response = await new Promise((resolve) => {
+        chrome.runtime.sendMessage(
+          {
+            action: 'import',
+            tabId: tab.id,
+          },
+          resolve,
+        );
       });
 
-      if (chrome.runtime.lastError) {
-        throw new Error(chrome.runtime.lastError.message);
+      if (!response) {
+        throw new Error('Không nhận được phản hồi từ background script');
       }
 
       showStatus(response.success, response.message);
@@ -112,12 +120,20 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error('Không tìm thấy tab đang mở');
       }
 
-      const response = await chrome.tabs.sendMessage(tab.id, {
-        action: 'fill',
+      showStatus(true, 'Đang fill đáp án...');
+
+      const response = await new Promise((resolve) => {
+        chrome.runtime.sendMessage(
+          {
+            action: 'fill',
+            tabId: tab.id,
+          },
+          resolve,
+        );
       });
 
-      if (chrome.runtime.lastError) {
-        throw new Error(chrome.runtime.lastError.message);
+      if (!response) {
+        throw new Error('Không nhận được phản hồi từ background script');
       }
 
       showStatus(response.success, response.message);

@@ -11,7 +11,7 @@
     ],
     "host_permissions": [
         "*://*.rikkei.vn/*",
-        "http://localhost:8000/*",
+        "https://quiz.rikkei.online/*",
         "file://*/*"
     ],
     "action": {
@@ -20,18 +20,6 @@
             "128": "images/icon128.png"
         }
     },
-    "content_scripts": [
-        {
-            "matches": [
-                "*://*.rikkei.vn/*",
-                "file://*/*"
-            ],
-            "js": [
-                "js/content.js"
-            ],
-            "run_at": "document_end"
-        }
-    ],
     "background": {
         "service_worker": "js/background.js"
     },

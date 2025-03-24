@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8000';
+const API_URL = 'https://quiz.rikkei.online';
 const PAGE_SIZE = 10;
 let currentPage = 1;
 
