@@ -1,4 +1,6 @@
-const API_URL = 'https://quiz.rikkei.online';
+import config from './config.js';
+
+const API_URL = config.API_URL;
 
 // Khởi tạo storage khi extension được cài đặt
 chrome.runtime.onInstalled.addListener(() => {

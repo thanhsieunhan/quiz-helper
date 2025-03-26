@@ -77,17 +77,28 @@ def create_question(question: schemas.QuestionRequest, db: Session = Depends(get
 def read_questions(
     page: int = 1,
     page_size: int = 10,
+    search: Optional[str] = None,
+    question_id: Optional[str] = None,
     db: Session = Depends(get_db)
 ):
     try:
+        # Tạo query cơ bản
+        query = db.query(models.Question)
+        
+        # Thêm điều kiện tìm kiếm nếu có
+        if search:
+            query = query.filter(models.Question.content.ilike(f"%{search}%"))
+        if question_id:
+            query = query.filter(models.Question.question_id.ilike(f"%{question_id}%"))
+        
+        # Lấy tổng số câu hỏi sau khi lọc
+        total = query.count()
+        
         # Tính toán offset
         offset = (page - 1) * page_size
         
-        # Lấy tổng số câu hỏi
-        total = db.query(models.Question).count()
-        
         # Lấy danh sách câu hỏi với phân trang và sắp xếp theo question_id
-        questions = db.query(models.Question).order_by(models.Question.question_id).offset(offset).limit(page_size).all()
+        questions = query.order_by(models.Question.question_id).offset(offset).limit(page_size).all()
         
         # Tính tổng số trang
         total_pages = (total + page_size - 1) // page_size
