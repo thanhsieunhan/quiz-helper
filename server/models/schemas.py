@@ -10,12 +10,16 @@ class AnswerCreate(AnswerBase):
 
 class Answer(AnswerBase):
     id: int
-    question_id: int
+    question_id: str
 
     class Config:
         from_attributes = True
 
 class QuestionBase(BaseModel):
+    content: str
+    question_id: str
+
+class QuestionCheckRequest(BaseModel):
     content: str
     question_id: str
 
@@ -26,7 +30,6 @@ class QuestionCreate(QuestionBase):
     pass
 
 class Question(QuestionBase):
-    id: int
     answers: List[Answer]
 
     class Config:

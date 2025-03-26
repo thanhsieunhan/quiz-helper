@@ -37,7 +37,7 @@ def create_question(question: schemas.QuestionRequest, db: Session = Depends(get
         ).first()
         
         if db_question:
-            logger.info(f"Question already exists with ID: {db_question.id}")
+            logger.info(f"Question already exists with ID: {db_question.question_id}")
             return db_question
 
         # Tạo câu hỏi mới
@@ -58,7 +58,7 @@ def create_question(question: schemas.QuestionRequest, db: Session = Depends(get
                 db_answer = models.Answer(
                     content=answer.content,
                     is_correct=answer.is_correct,
-                    question_id=db_question.id
+                    question_id=db_question.question_id
                 )
                 db.add(db_answer)
             except Exception as e:
@@ -66,7 +66,7 @@ def create_question(question: schemas.QuestionRequest, db: Session = Depends(get
                 raise HTTPException(status_code=400, detail=f"Lỗi khi thêm đáp án: {str(e)}")
 
         db.commit()
-        logger.info(f"Successfully created question with ID: {db_question.id}")
+        logger.info(f"Successfully created question with ID: {db_question.question_id}")
         return db_question
 
     except Exception as e:
@@ -104,7 +104,7 @@ def read_questions(
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/questions/check", response_model=schemas.Question)
-def check_question(question: schemas.QuestionRequest, db: Session = Depends(get_db)):
+def check_question(question: schemas.QuestionCheckRequest, db: Session = Depends(get_db)):
     try:
         logger.debug(f"Checking question: {question}")
         db_question = db.query(models.Question).filter(
@@ -116,17 +116,17 @@ def check_question(question: schemas.QuestionRequest, db: Session = Depends(get_
             logger.warning(f"Question not found: {question}")
             raise HTTPException(status_code=404, detail="Không tìm thấy câu hỏi")
             
-        logger.info(f"Found question with ID: {db_question.id}")
+        logger.info(f"Found question with ID: {db_question.question_id}")
         return db_question
     except Exception as e:
         logger.error(f"Error checking question: {str(e)}")
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.delete("/questions/{question_id}")
-def delete_question(question_id: int, db: Session = Depends(get_db)):
+def delete_question(question_id: str, db: Session = Depends(get_db)):
     try:
         logger.debug(f"Deleting question with ID: {question_id}")
-        db_question = db.query(models.Question).filter(models.Question.id == question_id).first()
+        db_question = db.query(models.Question).filter(models.Question.question_id == question_id).first()
         if not db_question:
             logger.warning(f"Question not found with ID: {question_id}")
             raise HTTPException(status_code=404, detail="Không tìm thấy câu hỏi")
